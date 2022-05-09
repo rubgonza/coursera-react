@@ -18,21 +18,22 @@ class DishDetail extends Component {
     }
   }
 
-  renderComments(comments) {
-    if (comments != null) {
+  renderComments(dish) {
+    if (dish != null) {
       // Date format options
       let options = {
         year: "numeric",
         month: "long",
-        day: "numeric",
+        day: "2-digit",
       };
 
-      return comments.map((comment) => {
+      return dish.comments.map((comment) => {
         return (
           <List key={comment.id} type="unstyled">
             <li>{comment.comment}</li>
             <li>
-              -- {comment.author}, {new Date(comment.date).toLocaleDateString("en-US", options)}
+              -- {comment.author},{" "}
+              {new Date(comment.date).toLocaleDateString("en-US", options)}
             </li>
           </List>
         );
@@ -43,16 +44,18 @@ class DishDetail extends Component {
   }
 
   render() {
-    const dishDetail = this.renderDish(this.props.selectedDish);
+    const dishDetail = this.renderDish(this.props.dish);
 
-    const comments = this.renderComments(this.props.comments);
+    const comments = this.renderComments(this.props.dish);
 
     return (
-      <div className="row">
-        <div className="col-12 col-md-5 m-1">{dishDetail}</div>
-        <div className="col-12 col-md-5 m-1">
-          <h4>Comments</h4>
-          {comments}
+      <div className="container">
+        <div className="row">
+          <div className="col-12 col-md-5 m-1">{dishDetail}</div>
+          <div className="col-12 col-md-5 m-1">
+            <h4>Comments</h4>
+            {comments}
+          </div>
         </div>
       </div>
     );
