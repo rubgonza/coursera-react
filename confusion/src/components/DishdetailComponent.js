@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardImg, CardText, CardBody, CardTitle, List } from "reactstrap";
+import { Card, CardImg, CardText, CardBody, CardTitle } from "reactstrap";
 
 //Functional component no esta en una clase ni extiende de component!
 function RenderDish({ dish }) {
@@ -20,24 +20,27 @@ function RenderDish({ dish }) {
 
 function RenderComments({ dish }) {
   if (dish != null) {
-    // Date format options
-    let options = {
-      year: "numeric",
-      month: "long",
-      day: "2-digit",
-    };
-
-    return dish.comments.map((comment) => {
+    const comm = dish.comments.map((comment) => {
       return (
-        <List key={comment.id} type="unstyled">
-          <li>{comment.comment}</li>
-          <li>
-            -- {comment.author},{" "}
-            {new Date(comment.date).toLocaleDateString("en-US", options)}
-          </li>
-        </List>
+        <li key={comment.id}>
+          <p>{comment.comment}</p>
+          <p>
+            -- {comment.author}, &nbsp;
+            {new Intl.DateTimeFormat("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "2-digit",
+            }).format(new Date(comment.date))}
+          </p>
+        </li>
       );
     });
+    return (
+      <React.Fragment>
+        <h4>Comments</h4>
+        <ul className="list-unstyled">{comm}</ul>
+      </React.Fragment>
+    );
   } else {
     return <div></div>;
   }
@@ -51,7 +54,6 @@ const DishDetail = (props) => {
           <RenderDish dish={props.dish} />
         </div>
         <div className="col-12 col-md-5 m-1">
-          <h4>Comments</h4>
           <RenderComments dish={props.dish} />
         </div>
       </div>
