@@ -44,6 +44,7 @@ class Main extends Component {
         />
       );
     };
+    //Do a const for each page
     const HomePage = () => {
       return (
         <Home
