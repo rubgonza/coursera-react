@@ -17,7 +17,7 @@ function About(props) {
   function RenderLeader({ leader }) {
     if (leader != null) {
       return (
-        <Media tag="li">
+        <Media key={leader.id} tag="li">
           <Media left middle>
             <Media object src={leader.image} alt={leader.name} />
           </Media>
