@@ -1,5 +1,6 @@
+/* eslint-disable react/jsx-pascal-case */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
-
 import {
   Breadcrumb,
   BreadcrumbItem,
