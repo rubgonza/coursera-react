@@ -61,11 +61,14 @@ export class CommentForm extends Component {
     });
   }
 
-  handleSubmit(event) {
-    console.log("Current State is: " + JSON.stringify(this.state));
-    alert("Current State is: " + JSON.stringify(this.state));
-    // event.preventDefault();
+  handleSubmit(values) {
     this.toggleModal();
+    this.props.addComment(
+      this.props.dishId,
+      values.rating,
+      values.author,
+      values.comment
+    );
   }
 
   toggleModal() {
@@ -113,14 +116,14 @@ export class CommentForm extends Component {
                 </Col>
               </Row>
               <Row className="form-group">
-                <Label htmlFor="yourname" md={4}>
+                <Label htmlFor="author" md={4}>
                   Your Name
                 </Label>
                 <Col md={12}>
                   <Control.text
-                    model=".yourname"
-                    id="yourname"
-                    name="yourname"
+                    model=".author"
+                    id="author"
+                    name="author"
                     placeholder="Your Name"
                     className="form-control"
                     validators={{
@@ -131,7 +134,7 @@ export class CommentForm extends Component {
                   />
                   <Errors
                     className="text-danger"
-                    model=".yourname"
+                    model=".author"
                     show="touched"
                     messages={{
                       required: "Required",
@@ -187,7 +190,7 @@ function RenderDish({ dish }) {
   }
 }
 
-function RenderComments({ comments }) {
+function RenderComments({ comments, addComment, dishId }) {
   if (comments != null) {
     const comm = comments.map((comment) => {
       return (
@@ -208,7 +211,7 @@ function RenderComments({ comments }) {
       <React.Fragment>
         <h4>Comments</h4>
         <ul className="list-unstyled">{comm}</ul>
-        <CommentForm />
+        <CommentForm dishId={dishId} addComment={addComment} />
       </React.Fragment>
     );
   } else {
@@ -236,7 +239,11 @@ const DishDetail = (props) => {
           <RenderDish dish={props.dish} />
         </div>
         <div className="col-12 col-md-5 m-1">
-          <RenderComments comments={props.comments} />
+          <RenderComments
+            comments={props.comments}
+            addComment={props.addComment}
+            dishId={props.dish.id}
+          />
         </div>
       </div>
     </div>
