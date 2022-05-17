@@ -112,7 +112,13 @@ class Main extends Component {
                 <Route
                   exact
                   path="/aboutus"
-                  component={() => <About leaders={this.props.leaders} />}
+                  component={() => (
+                    <About
+                      leaders={this.props.leaders}
+                      leaderLoading={this.props.leaders.isLoading}
+                      leaderErrMess={this.props.leaders.errMess}
+                    />
+                  )}
                 />
                 <Route
                   exact
