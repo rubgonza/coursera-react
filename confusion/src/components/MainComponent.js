@@ -11,6 +11,7 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   postComment,
+  postFeedback,
   fetchLeaders,
   fetchDishes,
   fetchComments,
@@ -40,6 +41,26 @@ const mapDispatchToProps = (dispatch) => ({
   fetchLeaders: () => dispatch(fetchLeaders()),
   postComment: (dishId, rating, author, comment) =>
     dispatch(postComment(dishId, rating, author, comment)),
+  postFeedback: (
+    firstname,
+    lastname,
+    telnum,
+    email,
+    agree,
+    contactType,
+    message
+  ) =>
+    dispatch(
+      postFeedback(
+        firstname,
+        lastname,
+        telnum,
+        email,
+        agree,
+        contactType,
+        message
+      )
+    ),
 });
 
 class Main extends Component {
@@ -130,7 +151,11 @@ class Main extends Component {
                   exact
                   path="/contactus"
                   component={() => (
-                    <Contact resetFeedbackForm={this.props.resetFeedbackForm} />
+                    <Contact
+                      resetFeedbackForm={this.props.resetFeedbackForm}
+                      addFeedback={this.props.addFeedback}
+                      postFeedback={this.props.postFeedback}
+                    />
                   )}
                 />
                 <Redirect to="/home" />

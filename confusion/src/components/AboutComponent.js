@@ -10,6 +10,7 @@ import {
 import { Link } from "react-router-dom";
 import { Loading } from "./LoadingComponent";
 import { baseUrl } from "./../shared/baseUrl";
+import { Fade, Stagger } from "react-animation-components";
 
 function RenderLeaders({ leaders, isLoading, errMess }) {
   if (isLoading) {
@@ -17,11 +18,18 @@ function RenderLeaders({ leaders, isLoading, errMess }) {
   } else if (errMess) {
     return <h4>{errMess}</h4>;
   } else {
-    const returnLeaders = leaders.map((leader) => {
-      return <RenderLeader leader={leader} />;
-    });
-
-    return returnLeaders;
+    const leadersList = (
+      <Stagger in>
+        {leaders.map((leader) => {
+          return (
+            <Fade in>
+              <RenderLeader leader={leader} />
+            </Fade>
+          );
+        })}
+      </Stagger>
+    );
+    return leadersList;
   }
 }
 
